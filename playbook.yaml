@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+    - name: Clone repository
+      git:
+        repo: 'git@code.ornl.gov:edx/edex.git'
+        dest: '~/edex'
+        clone: yes
+        update: yes
+    - name: Run docker-compose
+      command: docker-compose -f docker-compose.{{ inventory_hostname }}.yaml up -d
+      args:
+        chdir: '~/edex'

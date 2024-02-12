@@ -9,6 +9,13 @@ source ../.env || echo "No .env file found"
 # read the hosts.env file line by line
 while IFS= read -r host
 do
+  if [[ "$host" == \#* ]]; then
+    # ignore comments
+    continue
+  elif [[ "$host" == \[* ]]; then
+    # ignore groups
+    continue
+  fi
   tmux new-window -n "$host"
   # split the wiindow into 5 panes (3 top, 2 bottom)
   tmux split-window -h
